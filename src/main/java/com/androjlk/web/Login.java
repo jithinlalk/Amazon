@@ -2,6 +2,7 @@ package com.androjlk.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,8 +21,13 @@ public class Login extends HttpServlet {
 		UserDao userD = new UserDao();
 		if(userD.varifyUser(user)){
 			
-			RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 			request.setAttribute("username", user.getUsername());
+			
+			ProductDao productD = new ProductDao();
+			List<Product> productList = productD.getAllProducts();
+	        request.setAttribute("productList", productList);
+	       
+			RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 			rd.forward(request, response);
 			
 		}else{

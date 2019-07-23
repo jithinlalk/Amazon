@@ -12,7 +12,7 @@ public class UserDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
 			Statement stmt=con.createStatement();  
-			stmt.execute("insert into user (username, password) values (\""+user.getUsername()+"\",\""+user.getPassword()+"\")");
+			stmt.execute("insert into user (username, password, cart) values (\""+user.getUsername()+"\",\""+user.getPassword()+"\",\"\" )");
 			con.close();  
 		}catch(Exception e){ System.out.println(e);}  
 	}
