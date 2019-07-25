@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>com.androjlk.web.Login</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UpdateCart</servlet-name>
+  	<display-name>UpdateCart</display-name>
+  	<description></description>
+  	<servlet-class>com.androjlk.web.UpdateCart</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Register</servlet-name>
   	<url-pattern>/Register</url-pattern>
@@ -23,5 +29,9 @@
   <servlet-mapping>
   	<servlet-name>Login</servlet-name>
   	<url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateCart</servlet-name>
+  	<url-pattern>/UpdateCart</url-pattern>
   </servlet-mapping>
 </web-app>

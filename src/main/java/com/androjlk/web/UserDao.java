@@ -17,24 +17,39 @@ public class UserDao {
 		}catch(Exception e){ System.out.println(e);}  
 	}
 	
-	public boolean varifyUser(User user) {
+	public User verifyUser(User user) {
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
 			Statement stmt=con.createStatement();  
-			ResultSet rs = stmt.executeQuery("select password from user where username = \""+user.getUsername()+"\"");
-			String password = "not";  
+			ResultSet rs = stmt.executeQuery("select * from user where username = \""+user.getUsername()+"\"");
+			int id = 0;
+			String username = "", password = "", cart = "";  
 			while (rs.next()) {
+				id = rs.getInt("id");
+				username = rs.getString("username");
 				password = rs.getString("password");
+				cart = rs.getString("cart");
 				}
 			con.close();  
 			if(password.equals(user.getPassword())){
-				return true;
+				return new User(id, username, password, cart);
 			}else{
-				return false;
+				return null;
 			}
 		}catch(Exception e){ System.out.println(e);}
-		return false;  
+		return null;  
+	}
+	
+	public void updateCart(User user, int pId){
+		try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
+			Statement stmt=con.createStatement();  
+			System.out.println("update user set cart =\""+user.getCart()+"-"+pId+"\" where id=\""+user.getId()+"\"");
+			stmt.execute("update user set cart =\""+user.getCart()+"-"+pId+"\" where id=\""+user.getId()+"\"");
+			con.close();  
+		}catch(Exception e){ System.out.println(e);}  
 	}
 	
 }

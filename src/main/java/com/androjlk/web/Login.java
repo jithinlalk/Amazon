@@ -17,11 +17,11 @@ public class Login extends HttpServlet {
 	
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
-		User user = new User(username, password);
 		UserDao userD = new UserDao();
-		if(userD.varifyUser(user)){
+		User user = userD.verifyUser(new User(0, username, password, ""));
+		if(user != null){
 			
-			request.setAttribute("username", user.getUsername());
+			request.setAttribute("user", user);
 			
 			ProductDao productD = new ProductDao();
 			List<Product> productList = productD.getAllProducts();

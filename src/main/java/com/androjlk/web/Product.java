@@ -2,13 +2,20 @@ package com.androjlk.web;
 
 public class Product {
 	private String name, manufacturer, imageURL;
-	private int price;
+	private int id, price;
 	
-	public Product(String name, String manufacturer, int price, String imageURL) {
+	public Product(int id, String name, String manufacturer, int price, String imageURL) {
+		this.id = id;
 		this.name = name;
 		this.manufacturer = manufacturer;
 		this.price = price;
 		this.imageURL = imageURL;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;

@@ -1,10 +1,19 @@
 package com.androjlk.web;
 
 public class User {
-	private String username, password;
-	public User(String username, String password) {
+	private int id;
+	private String username, password, cart;
+	public User(int id, String username, String password, String cart) {
+		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.cart = cart;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getUsername() {
 		return username;
@@ -17,5 +26,11 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getCart() {
+		return cart;
+	}
+	public void setCart(String cart) {
+		this.cart = cart;
 	}
 }

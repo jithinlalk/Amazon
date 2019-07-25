@@ -21,12 +21,13 @@ public class ProductDao {
 	        ResultSet resultSet = statement.executeQuery(sql);
 	         
 	        while (resultSet.next()) {
+	        	int id = resultSet.getInt("id");
 	            String name = resultSet.getString("name");
 	            String manufacturer = resultSet.getString("manufacturer");
 	            int price = resultSet.getInt("price");
 	            String imageURL =  resultSet.getString("imageURL");
 	            
-	            Product product = new Product(name, manufacturer, price, imageURL);
+	            Product product = new Product(id, name, manufacturer, price, imageURL);
 	            productList.add(product);
 	        }
 	         
