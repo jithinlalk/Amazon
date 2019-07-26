@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,11 +22,13 @@ public class Login extends HttpServlet {
 		User user = userD.verifyUser(new User(0, username, password, ""));
 		if(user != null){
 			
-			request.setAttribute("user", user);
+			HttpSession session=request.getSession();  
+			 
+			session.setAttribute("user", user);
 			
 			ProductDao productD = new ProductDao();
 			List<Product> productList = productD.getAllProducts();
-	        request.setAttribute("productList", productList);
+	        session.setAttribute("productList", productList);
 	       
 			RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 			rd.forward(request, response);

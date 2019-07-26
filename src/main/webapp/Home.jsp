@@ -11,17 +11,7 @@
 <%@page import ="java.sql.ResultSet"%>
 <%@page import ="java.sql.Statement"%>
 <%@page import ="java.io.PrintWriter" %>
-<%! 
-public String asdf(){ return "jlk"; } 
-%>
-<%!				
-   public int calculate(int x, int y, JspWriter jw, HttpServletRequest r1) throws Exception
-   {
-     jw.println("Hello 1<br>");
-     String clientName = r1.getParameter("t1");
-     return x * y;
-   }
-%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -42,7 +32,7 @@ height: min-content;
 </style>
 </head>
 <body>
-<% User user = (User) request.getAttribute("user"); UserDao userD = new UserDao(); %>
+<% User user = (User) session.getAttribute("user"); UserDao userD = new UserDao(); %>
 <div style="display:flex;">
 <h1 class="center">AMAZON</h1>
 
@@ -59,7 +49,7 @@ height: min-content;
                 <th>Add to Cart</th>
             </tr>
             
- <% List<Product> productList = (ArrayList)request.getAttribute("productList"); 
+ <% List<Product> productList = (ArrayList)session.getAttribute("productList");
  	for (int i = 0; i < productList.size(); i++) { Product product = productList.get(i); %>
 
 <tr>
