@@ -1,11 +1,14 @@
     <%@ page import="java.sql.*"%>  
     <%@ page import="java.util.Arrays" %>
+<%@ page import="com.androjlk.web.User" %>
       
     <%  
     String pId = request.getParameter("pId"); 
     String uId = request.getParameter("uId"); 
-    String flag = request.getParameter("flag"); 
+    int flag = Integer.parseInt(request.getParameter("flag")); 
     String cart = "";
+    
+    User user = (User) session.getAttribute("user");
     
     
     try{  
@@ -19,7 +22,7 @@
     cart = rs.getString("cart");
     }  
     
-	if(flag.equals("1")){
+	if(flag>0){
     	if(!cart.contains("-"+pId)){
     		
     		cart += "-"+pId+",1";
@@ -27,13 +30,15 @@
     		PreparedStatement ps1=con.prepareStatement("update user set cart = \""+cart+"\" where id=?");  
     	    ps1.setString(1,uId);  
     	    ps1.execute();
+    	    user.setCart(cart);
+    	    session.setAttribute("user", user);
     		
     	}else{
     		String carts[] = cart.substring(1).split("-");
     		for(int i=0;i<carts.length;i++){
     			if(carts[i].startsWith(pId)){
     				String q[] = carts[i].split(",");
-    				carts[i] = pId+","+(Integer.parseInt(q[1])+1);
+    				carts[i] = pId+","+flag;
     				break;
     			}
     			
@@ -44,6 +49,8 @@
 			PreparedStatement ps3=con.prepareStatement("update user set cart = \""+cart+"\" where id=?");  
     	    ps3.setString(1,uId);  
     	    ps3.execute();
+    	    user.setCart(cart);
+    	    session.setAttribute("user", user);
     		
     	}
     }else{
@@ -54,11 +61,11 @@
     		for(int i=0;i<carts.length;i++){
     			if(carts[i].startsWith(pId)){
     				String q[] = carts[i].split(",");
-    				if(Integer.parseInt(q[1])==1)
+    				//if(Integer.parseInt(q[1])==1)
     					carts[i] = "";
-    				else
-    					carts[i] = pId+","+(Integer.parseInt(q[1])-1);
-    				break;
+    				//else
+    				//	carts[i] = pId+","+(Integer.parseInt(q[1])-1);
+    				//break;
     			}
     			
     		}
@@ -71,6 +78,8 @@
 			PreparedStatement ps3=con.prepareStatement("update user set cart = \""+cart+"\" where id=?");  
     	    ps3.setString(1,uId);  
     	    ps3.execute();
+    	    user.setCart(cart);
+    	    session.setAttribute("user", user);
     		
     	}
     	

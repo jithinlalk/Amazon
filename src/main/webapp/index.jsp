@@ -10,8 +10,10 @@
   padding: 20px;
 }
 </style>
+
 </head>
 <body>
+
 <div class = center>
 <h2>Login</h2>
 <form action="Login">

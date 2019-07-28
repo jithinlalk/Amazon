@@ -15,7 +15,7 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
 		UserDao userD = new UserDao();
@@ -28,7 +28,9 @@ public class Login extends HttpServlet {
 			
 			ProductDao productD = new ProductDao();
 			List<Product> productList = productD.getAllProducts();
+			
 	        session.setAttribute("productList", productList);
+	        session.setAttribute("login", "1");
 	       
 			RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 			rd.forward(request, response);

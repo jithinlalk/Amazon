@@ -32,7 +32,11 @@ height: min-content;
 </style>
 </head>
 <body>
-<% User user = (User) session.getAttribute("user"); UserDao userD = new UserDao(); %>
+<% 
+
+
+
+User user = (User) session.getAttribute("user"); UserDao userD = new UserDao(); %>
 <div style="display:flex;">
 <h1 class="center">AMAZON</h1>
 

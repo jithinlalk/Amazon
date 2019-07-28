@@ -32,6 +32,16 @@ height: min-content;
   border: 3px solid #000000;
   padding: 20px;
 }
+.num {
+width: 50px;
+  color: transparent;
+  text-shadow: 0 0 0 #2196f3;
+
+  &:focus {
+  	outline: none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -42,7 +52,7 @@ height: min-content;
 
 
 <div style="margin:auto;">
-	<table border="1" cellpadding="5">
+	<table border="1" cellpadding="5" id="tab">
         <caption><h2>Cart</h2></caption>
             <tr>
                 <th>Image</th>
@@ -57,12 +67,13 @@ height: min-content;
  	
  	Hashtable<Integer, String> h = new Hashtable<Integer, String>(); 
  	
+ 	if(cart.length()>0){
  	String carts[] = cart.substring(1).split("-");
 	for(int i=0;i<carts.length;i++){
 			String q[] = carts[i].split(",");
 			h.put(Integer.parseInt(q[0]),q[1]);
 	}
- 	
+ 	}
  	
  	
  	
@@ -72,40 +83,45 @@ height: min-content;
  	if(cart.contains("-"+product.getId())){
  	
  	%>
-
 <tr>
                     <td class = "phone" background="<%= product.getImageURL()%>"><c:out value=""  /></td>
                     <td><c:out value="<%= product.getName() %>" /></td>
-                    <td><c:out value="<%= product.getPrice() %>" /></td>
-                    <td><c:out value="" />
-                    <div style="display:flex;" >
-                    <button id="<%= i %>0" onclick="updateCart(this.id,0,'<%= product.getId() %>','<%=h.get(product.getId())%>')">-</button>
-                    <div style="padding:5px;" id="<%= i %>"><%= h.get(product.getId()) %></div>
-                    <button id="<%= i %>00" onclick="updateCart(this.id,1,'<%= product.getId() %>','<%=h.get(product.getId())%>')">+</button>
-                    </div>
-                    </td>      
+                    <td><c:out value="<%= product.getPrice() %>" /></td>   
                     
-                    <td><c:out value="" /> 
+                    <td><input class="num" type="number" min="1" max="20" onKeyDown="return false" 
+                    value="<%=h.get(product.getId()) %>"
+                    onChange="updateCart(this,'<%= product.getId() %>','<%= product.getPrice() %>','<%=i%>')"
+                    /></td>
+                    
+                    <td>
                     <% int tot = product.getPrice()*Integer.parseInt(h.get(product.getId())); %>
-                    <div> <%= tot %> </div>
+                    <div id="<%=i%>"> <%= tot %> </div>
                     </td>
-                    
-                    
-                    <td><c:out value="" />
-                   <input type="checkbox" onclick="myFunction(this,'<%= product.getId() %>')"
-                   <% if(user.getCart().contains("-"+product.getId())) 
-                	   {
-                	   %>
-                	   checked
-                	  <% }%>
-                   >
-                     </td>
+  
                 </tr>
-                
+          
 
 <% }} %>
           
         </table>
+        
+        <br>
+        
+        <%
+        int total=0;
+        for (int i = 1; i <= productList.size(); i++) { Product product = productList.get(i-1);
+     	if(cart.contains("-"+product.getId())){
+     		
+     		total += product.getPrice()*Integer.parseInt(h.get(product.getId()));
+     		
+     	}}
+        
+        %>
+        
+        
+        
+        <div id = "total"><h3>Total = <%= total %></h3></div>
+        
     </div>   
 
 
@@ -130,9 +146,26 @@ height: min-content;
 
 var request;  
 
-function updateCart(t,a,pId,i) {
+function updateCart(t,pId,pPrice,i) {
 
-	 var url="updateCart.jsp?uId="+<%= user.getId() %>+"&pId="+pId+"&flag="+a; 
+
+	document.getElementById(i).innerHTML = parseInt(pPrice)*parseInt(t.value);
+	
+	
+	//alert(t.value);	
+	var tot = 0;
+	var table = document.getElementById("tab");
+	for (var i = 1, row; row = table.rows[i]; i++) {
+		//tot += row.cells[4].value;
+		
+		tot += parseInt(row.cells[4].innerText);
+		
+	}
+	
+	document.getElementById("total").innerHTML = "<h3>Total = "+ tot+"</h3";
+	
+	
+	 var url="updateCart.jsp?uId="+<%= user.getId() %>+"&pId="+pId+"&flag="+t.value; 
 	 
 	 if(window.XMLHttpRequest){  
 		 request=new XMLHttpRequest();  
