@@ -1,8 +1,10 @@
 package com.androjlk.web;
 
+// User class
 public class User {
 	private int id;
 	private String username, password, cart;
+	
 	public User(int id, String username, String password, String cart) {
 		this.id = id;
 		this.username = username;

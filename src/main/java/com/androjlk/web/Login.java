@@ -16,32 +16,37 @@ public class Login extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Verify user credentials
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
 		UserDao userD = new UserDao();
 		User user = userD.verifyUser(new User(0, username, password, ""));
+		
 		if(user != null){
-			
-			HttpSession session=request.getSession();  
-			 
-			session.setAttribute("user", user);
+			// If user exist
 			
 			ProductDao productD = new ProductDao();
 			List<Product> productList = productD.getAllProducts();
 			
-	        session.setAttribute("productList", productList);
-	        session.setAttribute("login", "1");
+			// Store user details and product details in session variables
+			HttpSession session=request.getSession();  
+			session.setAttribute("user", user);
+			session.setAttribute("productList", productList);
 	       
+			// Redirect to Home page
 			RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
 			rd.forward(request, response);
 			
 		}else{
+			// If user doesn't exist
+			// Show alert box
 			response.setContentType("text/html"); 
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 		    out.println("alert('Invalid Username or Password');");
 	    	out.println("location='index.jsp';");
 			out.println("</script>");
+	
 		}
 	
 	}

@@ -1,5 +1,6 @@
 package com.androjlk.web;
 
+// Product class
 public class Product {
 	private String name, manufacturer, imageURL;
 	private int id, price;

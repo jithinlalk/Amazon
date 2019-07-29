@@ -13,12 +13,14 @@ public class Register extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		// Add username and password to database
 		String username = (String) request.getParameter("username");
 		String password = (String) request.getParameter("password");
 		User user = new User(0, username, password, "");
 		UserDao userD = new UserDao();
 		userD.addUser(user);
 		
+		// Redirect to Index/Login page
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 	

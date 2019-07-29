@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+// User DAO
 public class UserDao {
 
+	// Add new user credentials to database
 	public void addUser(User user) {
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -17,6 +19,7 @@ public class UserDao {
 		}catch(Exception e){ System.out.println(e);}  
 	}
 	
+	// Verify user credentials
 	public User verifyUser(User user) {
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -40,16 +43,4 @@ public class UserDao {
 		}catch(Exception e){ System.out.println(e);}
 		return null;  
 	}
-	
-	public void updateCart(User user, int pId){
-		try{  
-			Class.forName("com.mysql.cj.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
-			Statement stmt=con.createStatement();  
-			System.out.println("update user set cart =\""+user.getCart()+"-"+pId+"\" where id=\""+user.getId()+"\"");
-			stmt.execute("update user set cart =\""+user.getCart()+"-"+pId+"\" where id=\""+user.getId()+"\"");
-			con.close();  
-		}catch(Exception e){ System.out.println(e);}  
-	}
-	
 }
